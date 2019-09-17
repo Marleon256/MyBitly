@@ -1,0 +1,29 @@
+﻿@model IEnumerable<MyBitly.Models.UrlData>
+@{
+    ViewBag.Title = "All urls";
+}
+<a asp-action="Create">Add url</a>
+<table class="table">
+    <tr>
+        <td>Full url</td>
+        <td>Short url</td>
+        <td>Creation date</td>
+        <td>Hop count</td>
+        <td>Action</td>
+    </tr>
+    @foreach (var item in Model.OrderByDescending(x => x.CreationDate))
+    {
+    <tr>
+        <td><a href="@item.FullUrl">@item.FullUrl</a></td>
+        <td>
+            <a href="/@item.ShortUrl"><script>document.write(window.location.hostname)</script>/@item.ShortUrl</a>
+        </td>
+        <td>@item.CreationDate</td>
+        <td>@item.HopCount</td>
+        <td>
+            <a asp-action="Edit" asp-controller="Home" asp-route-shortUrl="@item.ShortUrl">Change</a> |
+            <a asp-action="Delete" asp-controller="Home" asp-route-shortUrl="@item.ShortUrl">Delete</a>
+        </td>
+    </tr>
+    }
+</table>
